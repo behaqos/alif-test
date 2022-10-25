@@ -1,0 +1,27 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/sheryorov/pkg/auth";
+import "google/protobuf/empty.proto";
+
+package auth;
+
+service Auth {
+  rpc Authorize (UserRequest) returns (UserResponse) {}
+  rpc CheckToken(TokenRequest) returns (google.protobuf.Empty) {}
+}
+
+message UserRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message TokenRequest {
+  string token = 1;
+  string login = 2;
+}
+
+message UserResponse {
+  string token = 1;
+  string expiredAt = 2;
+}

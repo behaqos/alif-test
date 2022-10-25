@@ -1,0 +1,26 @@
+app:
+  name: 'wallet-auth'
+  version: '1.0.0'
+
+http:
+  port: ':3030'
+
+logger:
+  log_level: 'error'
+  rollbar_env: 'wallet-auth'
+
+postgres:
+  username: 'postgres'
+  password: '1'
+  port: '5432'
+  dbName: 'postgres'
+  host: 'localhost'
+
+redis:
+  port: '6379'
+  host: 'localhost'
+  username: ' '
+  password: ' '
+tokenizer:
+  expiration: 4
+  passphrase: 'test'
