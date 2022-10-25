@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  redis:
+    image: redis 
+    container_name: go-redis
+    restart: always
+    ports:
+    - "6379:6379"
+  database:
+    image: postgres
+    container_name: go-db
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5433:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+  server:
+    container_name: go-server
+    build:
+      context: ./test-wallet-api/
+      dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      - database 
+      - redis
+      - auth
+    ports:
+    - "8082:3030"
+  auth:
+    container_name: go-auth-server
+    build:
+      context: ./test-wallet-api-auth/
+      dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      - database 
+      - redis
+    ports:
+    - "3030:8080"
+volumes:
+  data:
